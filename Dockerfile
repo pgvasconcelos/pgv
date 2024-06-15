@@ -1,18 +1,20 @@
-# Use a imagem base do Node.js com a versão desejada
+# Use a imagem base do Node.js
 FROM node:14
 
-# Crie o diretório de trabalho
+# Crie o diretório de trabalho dentro do contêiner
 WORKDIR /usr/src/app
 
-# Copie os arquivos de dependência e instale os pacotes
+# Copie o package.json e package-lock.json para instalar dependências
 COPY package*.json ./
+
+# Instale as dependências do Strapi
 RUN npm install
 
-# Copie o restante do código-fonte da aplicação
+# Copie todos os arquivos do diretório atual para o diretório de trabalho no contêiner
 COPY . .
 
-# Exponha a porta necessária pelo Strapi (geralmente 1337 por padrão)
+# Exponha a porta 1337, que é onde o Strapi será executado
 EXPOSE 1337
 
-# Comando para iniciar o Strapi
-CMD ["npm", "run", "develop"]
+# Comando padrão para iniciar o Strapi
+CMD ["npm", "start"]
